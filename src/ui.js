@@ -258,6 +258,8 @@ export default class Ui {
      * @type {Element}
      */
     this.nodes.imageEl = make(tag, this.CSS.imageEl, attributes);
+    console.log('omComplete',this);
+    
 
     /**
      * Add load event listener
@@ -270,6 +272,9 @@ export default class Ui {
        */
       if (this.nodes.imagePreloader) {
         this.nodes.imagePreloader.style.backgroundImage = '';
+      }
+      if(this.config.onComplete){
+        this.config.onComplete()
       }
     });
 
