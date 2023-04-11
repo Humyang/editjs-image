@@ -2,6 +2,21 @@
   --bg-color: #cdd1e0;
   --front-color: #388ae5;
   --border-color: #e8e8eb;
+  & .video-place-container{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+  .video-logo-place{
+    background: url(/video.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    min-width: 150px;
+    min-height: 100px;
+  }
 
   &__image {
     border-radius: 3px;

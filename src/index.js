@@ -242,7 +242,7 @@ export default class ImageTool {
       onActivate: () => {
         /* If it'a user defined tune, execute it's callback stored in action property */
         if (typeof tune.action === 'function') {
-          tune.action(tune.name);
+          tune.action(tune.name,tune,this);
 
           return;
         }
@@ -379,8 +379,21 @@ export default class ImageTool {
    */
   set image(file) {
     this._data.file = file || {};
+    
+    if(!file){
+      return
+    }
+    if(file.key){
 
-    if (file && file.url) {
+      const tag = /\.mp4$/.test(file.key) ? 'VIDEO' : 'IMG';
+      if(file.key&&tag=='IMG'){
+        this.ui.fillByKey(file.key)
+      }else if(file.key && tag == 'VIDEO'){
+        console.log('render video');
+        this.ui.renderPreloadCard(file)
+      }
+    }
+    else if (file && file.url) {
       this.ui.fillImage(file.url);
     }
   }
@@ -392,7 +405,7 @@ export default class ImageTool {
    *
    * @param {UploadResponseFormat} response - uploading server response
    * @returns {void}
-   */
+   */ 
   onUpload(response) {
     if (response.success && response.file) {
       this.image = response.file;

@@ -1,5 +1,6 @@
 import { IconPicture } from '@codexteam/icons';
 import { make } from './utils/dom';
+// import video from './video.png'
 
 /**
  * Class for working with UI:
@@ -44,7 +45,7 @@ export default class Ui {
     this.nodes.caption.dataset.placeholder = this.config.captionPlaceholder;
     this.nodes.imageContainer.appendChild(this.nodes.imagePreloader);
     this.nodes.wrapper.appendChild(this.nodes.imageContainer);
-    this.nodes.wrapper.appendChild(this.nodes.caption);
+    // this.nodes.wrapper.appendChild(this.nodes.caption);
     this.nodes.wrapper.appendChild(this.nodes.fileButton);
   }
 
@@ -141,7 +142,54 @@ export default class Ui {
     this.nodes.imagePreloader.style.backgroundImage = '';
     this.toggleStatus(Ui.status.EMPTY);
   }
+  clearImageContainer(){
+    const imageContainer = this.nodes.imageContainer;
+    while (imageContainer.firstChild) {
+      imageContainer.removeChild(imageContainer.firstChild);
+    }
+  }
+  // 添加视频预加载
+  renderPreloadCard(file){
+    // this.nodes.imagePreloader = ''
+    // this.hidePreloader()
+    // this.toggleStatus(Ui.status.EMPTY);
+    const imageContainer = this.nodes.imageContainer;
+    this.clearImageContainer()
+    let videoPlaceholderText = make('div','video-placeholder-text',{innerText:"视频："+file.time});
+    let videoPlaceholderLogo = make('div','video-logo-place');
+    imageContainer.appendChild(videoPlaceholderLogo)
+    imageContainer.appendChild(videoPlaceholderText)
+    imageContainer.classList.add('video-place-container');
+    let eventList = () => {
+      this.clearImageContainer()
+      imageContainer.removeEventListener("click",eventList)
+      this.fillByKey(file.key)
+      // this.toggleStatus(Ui.status.FILLED);
 
+      // /**
+      //  * Preloader does not exists on first rendering with presaved data
+      //  */
+      // if (this.nodes.imagePreloader) {
+      //   this.nodes.imagePreloader.style.backgroundImage = '';
+      // }
+      // alert('click')
+    }
+    imageContainer.addEventListener("click", eventList);
+    // imageContainer.appendChild(svg)
+  }
+  
+  async fillByKey(key){
+    console.log('fillByKey',key);
+    let cacheUrl = localStorage.getItem('imageCache'+key)
+    if(cacheUrl){
+      this.fillImage(cacheUrl)
+    }else{
+      // getByCos
+      let url = await window.getObjectUrl(key)
+      localStorage.setItem('imageCache'+key,url)
+      this.fillImage(url)
+    }
+  }
   /**
    * Shows an image
    *
@@ -152,7 +200,16 @@ export default class Ui {
     /**
      * Check for a source extension to compose element correctly: video tag for mp4, img — for others
      */
-    const tag = /\.mp4$/.test(url) ? 'VIDEO' : 'IMG';
+    // const tag = /\.mp4$/.test(url) ? 'VIDEO' : 'IMG';
+    let tag = 'IMG';
+
+    
+    if (url.includes("mp4")) {
+      tag = 'VIDEO'
+      // console.log("The URL contains 'mp4'");
+    }
+
+    console.log('fillImage',url,tag);
 
     const attributes = {
       src: url,
@@ -180,6 +237,7 @@ export default class Ui {
       attributes.loop = true;
       attributes.muted = true;
       attributes.playsinline = true;
+      attributes.controls = true;
 
       /**
        * Change event to be listened
@@ -220,9 +278,9 @@ export default class Ui {
    * @returns {void}
    */
   fillCaption(text) {
-    if (this.nodes.caption) {
-      this.nodes.caption.innerHTML = text;
-    }
+    // if (this.nodes.caption) {
+    //   this.nodes.caption.innerHTML = text;
+    // }
   }
 
   /**
