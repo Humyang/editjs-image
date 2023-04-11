@@ -203,10 +203,10 @@ export default class Ui {
     // const tag = /\.mp4$/.test(url) ? 'VIDEO' : 'IMG';
     let tag = 'IMG';
 
-    if (url.includes(".jpg") || url.includes(".jpeg") || url.includes(".png") || url.includes(".gif")) {
-      tag = "IMG";
-    } else{
+    if (url.includes(".mp4") || url.includes(".avi") || url.includes(".mov")) {
       tag = "VIDEO";
+    } else{
+      tag = "IMG";
     }
 
     if (url.includes("mp4")) {

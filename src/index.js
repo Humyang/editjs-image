@@ -388,10 +388,10 @@ export default class ImageTool {
       // const tag = /\.mp4$/.test(file.key) ? 'VIDEO' : 'IMG';
       let tag = 'IMG';
 
-      if (url.includes(".jpg") || url.includes(".jpeg") || url.includes(".png") || url.includes(".gif")) {
-        tag = "IMG";
-      } else{
+      if (file.key.includes(".mp4") || file.key.includes(".avi") || file.key.includes(".mov")) {
         tag = "VIDEO";
+      } else{
+        tag = "IMG";
       }
 
       if(file.key&&tag=='IMG'){
