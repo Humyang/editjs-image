@@ -385,7 +385,15 @@ export default class ImageTool {
     }
     if(file.key){
 
-      const tag = /\.mp4$/.test(file.key) ? 'VIDEO' : 'IMG';
+      // const tag = /\.mp4$/.test(file.key) ? 'VIDEO' : 'IMG';
+      let tag = 'IMG';
+
+      if (url.includes(".jpg") || url.includes(".jpeg") || url.includes(".png") || url.includes(".gif")) {
+        tag = "IMG";
+      } else{
+        tag = "VIDEO";
+      }
+
       if(file.key&&tag=='IMG'){
         this.ui.fillByKey(file.key)
       }else if(file.key && tag == 'VIDEO'){

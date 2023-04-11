@@ -203,7 +203,12 @@ export default class Ui {
     // const tag = /\.mp4$/.test(url) ? 'VIDEO' : 'IMG';
     let tag = 'IMG';
 
-    
+    if (url.includes(".jpg") || url.includes(".jpeg") || url.includes(".png") || url.includes(".gif")) {
+      tag = "IMG";
+    } else{
+      tag = "VIDEO";
+    }
+
     if (url.includes("mp4")) {
       tag = 'VIDEO'
       // console.log("The URL contains 'mp4'");
