@@ -203,18 +203,19 @@ export default class Ui {
     // const tag = /\.mp4$/.test(url) ? 'VIDEO' : 'IMG';
     let tag = 'IMG';
 
-    if (url.includes(".mp4") || url.includes(".avi") || url.includes(".mov")) {
+    if (url.includes(".mp4") || url.includes(".avi") || url.includes(".mov")||
+      url.includes(".MP4") || url.includes(".AVI") || url.includes(".MOV")) {
       tag = "VIDEO";
     } else{
       tag = "IMG";
     }
 
-    if (url.includes("mp4")) {
-      tag = 'VIDEO'
-      // console.log("The URL contains 'mp4'");
-    }
+    // if (url.includes("mp4")) {
+    //   tag = 'VIDEO'
+    //   // console.log("The URL contains 'mp4'");
+    // }
 
-    console.log('fillImage',url,tag);
+    // console.log('fillImage',url,tag);
 
     const attributes = {
       src: url,
