@@ -155,7 +155,7 @@ export default class Ui {
     // this.toggleStatus(Ui.status.EMPTY);
     const imageContainer = this.nodes.imageContainer;
     this.clearImageContainer()
-    let videoPlaceholderText = make('div','video-placeholder-text',{innerText:"视频："+file.time});
+    let videoPlaceholderText = make('div','video-placeholder-text',{innerText:"视频："+file.duration+"秒"});
     let videoPlaceholderLogo = make('div','video-logo-place');
     imageContainer.appendChild(videoPlaceholderLogo)
     imageContainer.appendChild(videoPlaceholderText)

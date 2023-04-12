@@ -14,8 +14,8 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    min-width: 150px;
-    min-height: 100px;
+    min-width: 50px;
+    min-height: 50px;
   }
 
   &__image {
@@ -116,10 +116,10 @@
 
   &--loading {
     ^&__image {
-      min-height: 200px;
+      /* min-height: 200px; */
       display: flex;
-      border: 1px solid var(--border-color);
-      background-color: #fff;
+      /* border: 1px solid var(--border-color); */
+      /* background-color: #fff; */
 
       &-picture {
         display: none;
