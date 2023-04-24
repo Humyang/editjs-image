@@ -188,7 +188,7 @@ export default class Ui {
       let url = await window.getObjectUrl(key)
       // localStorage.setItem('imageCache'+key,url)
       this.fillImage(url)
-    }
+    // }
   }
   /**
    * Shows an image
