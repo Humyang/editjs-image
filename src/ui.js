@@ -180,13 +180,13 @@ export default class Ui {
   
   async fillByKey(key){
     console.log('fillByKey',key);
-    let cacheUrl = localStorage.getItem('imageCache'+key)
-    if(cacheUrl){
-      this.fillImage(cacheUrl)
-    }else{
+    // let cacheUrl = localStorage.getItem('imageCache'+key)
+    // if(cacheUrl){
+      // this.fillImage(cacheUrl)
+    // }else{
       // getByCos
       let url = await window.getObjectUrl(key)
-      localStorage.setItem('imageCache'+key,url)
+      // localStorage.setItem('imageCache'+key,url)
       this.fillImage(url)
     }
   }
