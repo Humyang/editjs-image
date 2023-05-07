@@ -150,7 +150,8 @@ export default class ImageTool {
       buttonContent: config.buttonContent || '',
       uploader: config.uploader || undefined,
       actions: config.actions || [],
-      onComplete:config.onComplete || undefined
+      onComplete:config.onComplete || undefined,
+      onVideoUpload:config.onVideoUpload || undefined
     };
 
     /**
@@ -289,7 +290,7 @@ export default class ImageTool {
        * Drag n drop file from into the Editor
        */
       files: {
-        mimeTypes: [ 'image/*' ],
+        mimeTypes: [ 'image/*','video/*' ],
       },
     };
   }
@@ -401,6 +402,10 @@ export default class ImageTool {
       }else if(file.key && tag == 'VIDEO'){
         console.log('render video');
         this.ui.renderPreloadCard(file)
+        if(this.config.onVideoUpload){
+
+          this.config.onVideoUpload()
+        }
       }
     }
     else if (file && file.url) {
