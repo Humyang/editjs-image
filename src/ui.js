@@ -1,5 +1,63 @@
 import { IconPicture } from '@codexteam/icons';
 import { make } from './utils/dom';
+function longTapSpeedUp(element){
+  // const video = document.querySelector("video");
+  const video = element
+  let longpressTimer;
+  let IntervalTimer;
+  video.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+  function down(e) {
+    console.log("111");
+    let touchX = 0;
+    if (e.touches) {
+      touchX = e.touches[0].pageX;
+    } else {
+      touchX = e.offsetX;
+    }
+    const videoWidth = video.offsetWidth;
+    const timeInterval = 500; // 长按时间为0.5秒（500毫秒）
+    const currentTime = video.currentTime;
+  
+    if (touchX < videoWidth / 2) {
+      // 左半部分，设为倒放
+      video.pause();
+      longpressTimer = setTimeout(() => {
+        IntervalTimer = setInterval(() => {
+          video.currentTime = video.currentTime - 1; // 倒退1秒
+        }, 300);
+        // video.play();
+      }, timeInterval);
+    } else {
+      // 右半部分，设为1.5倍速播放
+      longpressTimer = setTimeout(() => {
+        video.playbackRate = 5;
+      }, timeInterval);
+    }
+  }
+  function up(event) {
+    clearTimeout(longpressTimer);
+    clearInterval(IntervalTimer);
+    video.playbackRate = 1.0; // 恢复正常状态
+    video.play();
+    event.preventDefault();
+  }
+  video.addEventListener("touchstart", (e) => {
+    down(e);
+  });
+  video.addEventListener("touchend", (event) => {
+    up(event);
+  });
+  
+  video.addEventListener("mousedown", (e) => {
+    down(e);
+  });
+  video.addEventListener("mouseup", (e) => {
+    up(e);
+  });
+}
 // import video from './video.png'
 
 /**
@@ -241,7 +299,7 @@ export default class Ui {
        */
       attributes.autoplay = true;
       attributes.loop = true;
-      attributes.muted = true;
+      attributes.muted = false;
       attributes.playsinline = true;
       attributes.controls = true;
 
@@ -278,6 +336,9 @@ export default class Ui {
         this.config.onComplete()
       }
     });
+    if (tag === 'VIDEO') {
+      longTapSpeedUp(this.nodes.imageEl)
+    }
 
     this.nodes.imageContainer.appendChild(this.nodes.imageEl);
   }
